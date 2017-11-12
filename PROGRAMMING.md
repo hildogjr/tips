@@ -124,7 +124,7 @@ The multiple line comment may be used to some development / result comment.
 #define BUTTON_PRESS_times 5
 ```
 
-2. ##### Names of the variable and functions are lower case with a upper case letter to denote a new word. Avoid the _ use and use understandable abbreviations to avoid long names;
+2. ##### Names of the variable and functions are lower case with a upper case letter to denote a new word faloow the [Camel Case style](https://en.wikipedia.org/wiki/Camel_case). Avoid the _ use and use understandable abbreviations to avoid long names;
 
 * ###### Good:
 ```cpp
