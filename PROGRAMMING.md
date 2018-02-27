@@ -32,16 +32,22 @@ In short: The easier the code review is, the better the chance your pull request
 
 2. Use <tab> and not <space> to ident;
 
-3. Identation have to be used when the line continues on the next;
+3. Identation have to be used when the line continues on the next line;
 
 ```cpp
-result = soma1 + soma2 * factor +
-	soma3; // Prefer to broke in the + or -.
+result = sum1 + sum2 * factor +
+	sum3 + sum4 +
+	MATH_CONSTANT; // Prefer to broke in the + or -.
 ```
 
 ```matlab
-result = soma1 + soma2 * factor + ...
-	soma3; % Prefer to broke in the + or -.
+result = sum1 + sum2 * factor + ...
+	sum3; % Prefer to broke in the + or -.
+```
+
+```pytthon
+result = sum1 + sum2 + \
+	sum3
 ```
 
 4. Identation may be used to define blocks of code that is dealing if differents devices / tasks.
@@ -59,6 +65,21 @@ selectDevice2
 	finishCommunication
 ```
 
+5. As option to (4), a empty line may be used and is prefered.
+
+```
+selectDevice1
+startCommunication
+sendCommand
+...
+finishCommunication
+
+selectDevice2
+startCommunication
+sendCommand
+...
+finishCommunication
+```
 
 ### Comments
 
@@ -66,7 +87,7 @@ selectDevice2
 
 * ###### Good:
 ```
-total = result1 + result2; // Aggregation of the past results of the calculation.
+total = result1 + result2; // Aggregation of the past results of the history.
 ```
 
 * ###### Bad:
@@ -83,6 +104,9 @@ total = result1 + result2; // Total is the sum of the results.
 * ###### Good:
 ```cpp
 callConfig; // Configuration of the system, peripheral and so.
+```
+```python
+function42 # Configuration of the system, peripheral and so.
 ```
 
 * ###### Bad:
@@ -105,12 +129,34 @@ Please don't piss me off with that
 */
 ```
 
-The multiple line comment may be used to some development / result comment.
+The multiple line comment may be used to some development / result comment, never to code description.
+
+4. Every time that make a reference to a variable in the comment, this have to be write between <quote>;
+```python
+result = split(manf) # Divide the `manf` manufacture name references.
+```
+
+### Documentation
+
+Follow the DoxyGen standard to describe the functions and their input parameters.
+```python
+def groups_sort(new_component_groups):
+	'''@brief Order the groups in a alphabetical way.
+		
+	Put the components groups in the spreadsheet rows in a spefic order
+	using the reference string of the components. The order is defined
+	by BOM_ORDER.
+	@param components Part components in a `list()` of `dict()`, format given by the EDA modules.
+	@return Same as input.
+    '''
+```
+
+It is allowed to use the multiline comments to the documentation style.
 
 
 ### Variables
 
-1. ##### Use definitions dispete variables do constants. These have to be written upper case and _ separated words. To Math constants use the longer decimal notation possible even if it is not actually used this precision after compilation;
+1. ##### Use definitions instead variables to declarate constants. These have to be written upper case and <underscore> separated words. To Math constants use the longer decimal notation possible even if it is not actually used this precision after compilation;
 
 * ###### Good:
 ```cpp
@@ -118,13 +164,22 @@ The multiple line comment may be used to some development / result comment.
 #define BUTTON_PRESS_TIMES 5
 ```
 
+```python
+MAX_LEN_WORD = 50
+```
+
+
 * ###### Bad:
 ```cpp
 #define M_SQTR_2 1.41
 #define BUTTON_PRESS_times 5
 ```
 
-2. ##### Names of the variable and functions are lower case with a upper case letter to denote a new word faloow the [Camel Case style](https://en.wikipedia.org/wiki/Camel_case). Avoid the _ use and use understandable abbreviations to avoid long names;
+```python
+maxLenWord = 50
+```
+
+2. ##### Names of the variable and functions are lower case with a upper case letter to denote a new word faloow the [Camel Case style](https://en.wikipedia.org/wiki/Camel_case). Avoid the <underscore> use and use understandable abbreviations to avoid long names;
 
 * ###### Good:
 ```cpp
@@ -132,6 +187,10 @@ int hardwareConfig();
 float evalPID(float error);
 float va, vb, ic;
 unsigned int errorCount = 0;
+```
+
+```python
+def connectElectricalGrid():
 ```
 
 * ###### Bad:
@@ -142,18 +201,25 @@ unsigned int error_Count = 0;
 
 ```
 
-3. ##### Use of _ is allowed to make clear sub type of one measure or variable;
+3. ##### Use of <underscore> is allowed to make clear sub type of one measure or variable;
 * ###### Good:
 ```cpp
 float va, va_pk; // First one is va in time and second in the peak value.
 ```
 
-4. ##### Prefer to make explicit the type, unit (symbol between \[\], use use the name in the case of not a keyboard symbol: \[ohm\]) and use of one variable in the first use / declaration.
+4. ##### Make explicit the unit (symbol between \[\], use use the name in the case of not a keyboard symbol: \[ohm\]) in the variable declariton or frist use (in the languages that not need declaration).
 
 ```matlab
-va_rms = 0; % Phase A voltage RMS \[V\].
+va_rms = 0; % Phase A voltage RMS [V].
 ```
 
+```c
+float va_rms, vb_rms, vc_rms = 0; % Voltage grid phase RMS values [V].
+```
+
+```python
+va_rms = rms(va, pointQnt) # RMS of va [bits] (that value is bits, not converted to volts after the ADC read).
+```
 
 ### Code
 
@@ -174,7 +240,7 @@ if () {
 }
 ```
 
-2. ##### Use tabs instead of white-spaces (we usually set our editors to 4 white-spaces for 1 tab, but the choice is up to you);
+2. ##### Use tabs instead of white-spaces (we usually set our editors to 4 white-spaces for 1 tab, this is not allowed);
 
 
 3. ##### Always leave one space before and after binary and ternary operators and to separate the sentences;
@@ -210,6 +276,7 @@ Function names are not separated from the first parenthesis.</h5>
 ```cpp
 foo();
 myObject.foo(24);
+myObject.foo(param1, param2); // Use spaces between the parameters.
 ```
 
 * ###### Bad:
@@ -257,4 +324,14 @@ if (foo < I_CAN_PUSH_ON_THE_RED_BUTTON)
 ```cpp
 if (foo < 5)
 	startThermoNuclearWar();
+```
+
+### Imports
+
+1. The imports declarion have to follow the order: language libraries, OS libraries, thirth part libraries and personal libraries;
+
+2. Prefer to describe the importations;
+```python
+from collections import Counter # For check of different values to same field of `variable`.
+from sys import exit # Used to scape in case of error.
 ```
