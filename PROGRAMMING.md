@@ -97,9 +97,9 @@ total = result1 + result2; // Total is the sum of the results.
 
 2. ##### Comments are like text, so follow the grammar sentence;
 
-* Start with <space> <comment mark>
+* Start with \<space\> \<comment mark\>
 * Start writting the text as a real text: use upper letter, comma, ...
-* Finish with <dot>
+* Finish with \<dot\>
 
 * ###### Good:
 ```cpp
